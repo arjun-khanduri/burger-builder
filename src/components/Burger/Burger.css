@@ -8,6 +8,16 @@
     font-size: 1.2rem;
 }
 
+.Burger::-webkit-scrollbar {
+    width: 10px;
+}
+
+.Burger::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    box-shadow: 0in;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
 @media(min-width: 500px) and (min-height: 400px){
     .Burger{
         width: 350px;
