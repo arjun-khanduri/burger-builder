@@ -144,6 +144,8 @@ class ContactData extends React.Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         placeholder={formElement.config.placeholder}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         value={formElement.config.value} />
                 ))}
