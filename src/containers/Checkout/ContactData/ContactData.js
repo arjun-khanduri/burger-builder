@@ -14,7 +14,11 @@ class ContactData extends React.Component {
                     type: 'text',
                     placeholder: 'Your Name',
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -22,7 +26,11 @@ class ContactData extends React.Component {
                     type: 'email',
                     placeholder: 'Email ID',
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             street: {
                 elementType: 'input',
@@ -30,7 +38,11 @@ class ContactData extends React.Component {
                     type: 'text',
                     placeholder: 'Street',
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
 
             },
             country: {
@@ -39,7 +51,11 @@ class ContactData extends React.Component {
                     type: 'text',
                     placeholder: 'Country',
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             postalCode: {
                 elementType: 'input',
@@ -47,7 +63,11 @@ class ContactData extends React.Component {
                     type: 'text',
                     placeholder: 'ZIP Code',
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -63,11 +83,19 @@ class ContactData extends React.Component {
         loading: false
     }
 
+    checkValidity = (value, rules) => {
+        let isValid = true;
+        if (rules.required)
+            isValid = value.trim() !== '' && isValid;
+
+        return isValid;
+    }
+
     orderHandler = (event) => {
         event.preventDefault();
         const formData = {};
         this.setState({ loading: true });
-        for(let formElement in this.state.orderForm) {
+        for (let formElement in this.state.orderForm) {
             formData[formElement] = this.state.orderForm[formElement].value
         }
         const order = {
@@ -94,7 +122,9 @@ class ContactData extends React.Component {
             ...updatedOrderForm[inputID]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputID] = updatedFormElement;
+        console.log(updatedFormElement.valid);
         this.setState({ orderForm: updatedOrderForm });
     }
 
