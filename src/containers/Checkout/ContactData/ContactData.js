@@ -82,7 +82,7 @@ class ContactData extends React.Component {
                         { value: 'cheapest', displayValue: 'Cheapest' }
                     ]
                 },
-                value: '',
+                value: 'fastest',
                 validation: {
                     required: false,
                 },
@@ -135,7 +135,6 @@ class ContactData extends React.Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true
         updatedOrderForm[inputID] = updatedFormElement;
-        console.log(updatedFormElement.valid);
         let formIsValid = true;
         for (let i in updatedOrderForm) {
             formIsValid = updatedOrderForm[i].valid && formIsValid;
