@@ -43,10 +43,10 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 error: true
-            }
+            };
         default:
             return state;
-    }
+    };
 };
 
 export default reducer;
