@@ -30,19 +30,21 @@ class Auth extends React.Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 4,
+                    minLength: 6,
                 },
                 valid: false,
                 touched: false
             },
-        }
+        },
+        isSignup: true
     };
 
     checkValidity = (value, rules) => {
         let isValid = true;
         if (rules.required)
             isValid = value.trim() !== '' && isValid;
-
+        if (rules.minLength)
+            isValid = value.length > rules.minLength && isValid;
         return isValid;
     }
 
@@ -52,7 +54,8 @@ class Auth extends React.Component {
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName])
+                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                touched: true
             }
         }
         this.setState({ controls: updatedControls })
@@ -60,7 +63,13 @@ class Auth extends React.Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return { isSignup: !prevState.isSignup }
+        });
     }
 
     render() {
@@ -90,6 +99,9 @@ class Auth extends React.Component {
                     {form}
                     <Button btnType="Success">SUBMIT</Button>
                 </form>
+                <Button
+                    clicked={this.switchAuthModeHandler}
+                    btnType="Danger">SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
             </div>
 
         );
@@ -98,7 +110,7 @@ class Auth extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
     }
 }
 
